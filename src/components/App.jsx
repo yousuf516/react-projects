@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 
 function App() {
@@ -18,48 +19,9 @@ function App() {
     const { value, name } = event.target;
 
     setContact((prevValue) => {
-      if (name === "fName") {
-        if (value.length < 10) {
-          return {
-            fName: value,
-            lName: prevValue.lName,
-            email: prevValue.email
-          };
-        } else {
-          return {
-            fName: value.slice(0, 10),
-            lName: prevValue.lName,
-            email: prevValue.email
-          };
-        }
-      } else if (name === "lName") {
-        if (value.length < 10) {
-          return {
-            fName: prevValue.fName,
-            lName: value,
-            email: prevValue.email
-          };
-        } else {
-          return {
-            fName: prevValue.fName,
-            lName: value.slice(0, 10),
-            email: prevValue.email
-          };
-        }
-      } else if (name === "email") {
-        if (value.length < 20) {
-          return {
-            fName: prevValue.fName,
-            lName: prevValue.lName,
-            email: value
-          };
-        } else {
-          return {
-            fName: prevValue.fName,
-            lName: prevValue.lName,
-            email: value.slice(0, 30)
-          };
-        }
+      return {
+        ...prevValue,
+        [name]: value
       }
     });
   }
