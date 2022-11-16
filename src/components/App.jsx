@@ -1,68 +1,42 @@
-
 import React, { useState } from "react";
 
 function App() {
-  function changeColor() {
-    setMouseOver(true);
-  }
-  function colorChange() {
-    setMouseOver(false);
-  }
-  const [isMouseOver, setMouseOver] = React.useState(false);
-  const [contact, setContact] = useState({
-    fName: "",
-    lName: "",
-    email: ""
-  });
+  const [inputText, setInputText] = useState("");
+  const [items, setItems] = useState([]);
 
-  function credentialsChange(event) {
-    const { value, name } = event.target;
+  function handleChange(event) {
+    const newValue = event.target.value;
+    setInputText(newValue);
+  }
 
-    setContact((prevValue) => {
-      return {
-        ...prevValue,
-        [name]: value
-      }
-    });
+  function addItem() {
+    if (inputText !== "") {
+      setItems((prevItems) => {
+        return [...prevItems, inputText];
+      });
+      console.log(inputText);
+      setInputText("");
+    }
   }
 
   return (
     <div className="container">
-      <h1>
-        Hello {contact.fName} {contact.lName}
-      </h1>
-      <p>{contact.email}</p>
-      <form>
-        <input
-          onChange={credentialsChange}
-          type="text"
-          placeholder="First Name"
-          value={contact.fName}
-          name="fName"
-        />
-        <input
-          onChange={credentialsChange}
-          type="text"
-          name="lName"
-          placeholder="Last Name"
-          value={contact.lName}
-        />
-        <input
-          onChange={credentialsChange}
-          type="email"
-          value={contact.email}
-          name="email"
-          placeholder="Email"
-        />
-        <button
-          type="submit"
-          style={{ backgroundColor: isMouseOver ? "black" : "white" }}
-          onMouseOver={changeColor}
-          onMouseOut={colorChange}
-        >
-          Submit
+      <div className="heading">
+        <h1>To-Do List</h1>
+      </div>
+      <div className="form">
+        <input onChange={handleChange} type="text" value={inputText} />
+        <button onClick={addItem}>
+          <span>Add</span>
         </button>
-      </form>
+      </div>
+      <div>
+        <ul>
+          {items.map((todoItem) => (
+            <li>{todoItem}</li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
