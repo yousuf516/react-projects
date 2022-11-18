@@ -1,8 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
+import ToDoItem from "./toDoItem";
 
 function App() {
-  const [inputText, setInputText] = useState("");
-  const [items, setItems] = useState([]);
+  const [inputText, setInputText] = React.useState("");
+  const [items, setItems] = React.useState([]);
+
+  function deleteItem(id) {
+    setItems(prevItems => {
+      return prevItems.filter((item, index) => {
+        return index != id;
+      })
+    })
+  }
 
   function handleChange(event) {
     const newValue = event.target.value;
@@ -14,7 +23,6 @@ function App() {
       setItems((prevItems) => {
         return [...prevItems, inputText];
       });
-      console.log(inputText);
       setInputText("");
     }
   }
@@ -32,8 +40,8 @@ function App() {
       </div>
       <div>
         <ul>
-          {items.map((todoItem) => (
-            <li>{todoItem}</li>
+          {items.map((todoItem, index) => (
+            <ToDoItem key={index} id={index} text={todoItem} onChecked={deleteItem}></ToDoItem>
           ))}
         </ul>
       </div>
